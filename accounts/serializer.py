@@ -21,7 +21,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         payload = RefreshToken.for_user(new_user)
         payload['username'] = str(username)
         validated_data['token'] = str(payload.access_token)
-        print('Token created successfully. Your token is ')
+        print('Token created successfully')
         
         return validated_data
         
