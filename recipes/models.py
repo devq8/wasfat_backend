@@ -43,10 +43,9 @@ class Ingredient(models.Model):
 
 
 class Quantity(models.Model):
-    ingredient = models.OneToOneField(
+    ingredient = models.ManyToManyField(
         Ingredient,
-        on_delete=models.CASCADE,
-        primary_key=True,
+        related_name='ingredient',
     )
     qty = models.CharField(max_length=30, )
     unit = models.CharField(max_length=30, )
