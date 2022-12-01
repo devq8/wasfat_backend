@@ -14,8 +14,16 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
+from recipes.views import CategoriesView
+
+
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register('category', CategoriesView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,7 +43,8 @@ urlpatterns = [
     
     
     # ----- Categories URLs -----
-    # path('categories/', users_views.register , name="categories-list"),
+    path('', include(router.urls)),
+    # path('categories', CategoriesView.as_view() , name="categories-list"),
     # path('categories/add/', users_views.register , name="category-add"),
     # path('categories/<int:category_id>/', users_views.register , name="category-details"),
     # path('categories/<int:category_id>/edit/', users_views.register , name="category-edit"),
@@ -43,7 +52,7 @@ urlpatterns = [
     
     
     # ----- Ingredients URLs -----
-    # path('ingredients/', users_views.register , name="ingredients-list"),
+    # path('ingredients/', users_views.register , name="ingredients-list"),``
     # path('ingredients/add/', users_views.register , name="ingredient-add"),
     # path('ingredients/<int:ingredient_id>/', users_views.register , name="ingredient-details"),
     # path('ingredients/<int:ingredient_id>/edit/', users_views.register , name="ingredient-edit"),
