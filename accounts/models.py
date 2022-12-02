@@ -9,10 +9,10 @@ class Profile(models.Model):
         on_delete= models.CASCADE,
         primary_key=True,
     )
-    # image = models.ImageField()
+    image = models.ImageField(upload_to='images/profile', blank=True,)
 
     def __str__(self) :
-        return self.user
+        return self.user.get_username()
     
 # class UserFollowing(models.Model):
 #     user = models.ForeignKey(

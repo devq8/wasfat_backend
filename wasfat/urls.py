@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
-from recipes.views import CategoriesView
-
+from recipes.views import CategoriesView, RecipeListView, CategoryListView
+from django.conf import settings
+from django.conf.urls.static import static
 
 from rest_framework import routers
 
@@ -31,11 +32,11 @@ urlpatterns = [
 
     # ----- Authentications URLs -----
     path('auth/signup/', UserCreateAPIView.as_view() , name="signup"),
-    path('auth/login/', UserLoginAPIView.as_view() , name="login"),
+    path('auth/signin/', UserLoginAPIView.as_view() , name="signin"),
 
 
     # ----- Recipes URLs -----
-    # path('recipes/', users_views.register , name="recipes-list"),
+    path('recipes/', RecipeListView.as_view() , name="recipes-list"),
     # path('recipes/add/', users_views.register , name="recipe-add"),
     # path('recipes/<int:recipe_id>/', users_views.register , name="recipe-details"),
     # path('recipes/<int:recipe_id>/edit/', users_views.register , name="recipe-edit"),
@@ -44,7 +45,7 @@ urlpatterns = [
     
     # ----- Categories URLs -----
     path('', include(router.urls)),
-    # path('categories', CategoriesView.as_view() , name="categories-list"),
+    path('categories', CategoryListView.as_view() , name="categories-list"),
     # path('categories/add/', users_views.register , name="category-add"),
     # path('categories/<int:category_id>/', users_views.register , name="category-details"),
     # path('categories/<int:category_id>/edit/', users_views.register , name="category-edit"),
@@ -58,3 +59,9 @@ urlpatterns = [
     # path('ingredients/<int:ingredient_id>/edit/', users_views.register , name="ingredient-edit"),
     # path('ingredients/<int:ingredient_id>/delete/', users_views.register , name="ingredient-delete"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

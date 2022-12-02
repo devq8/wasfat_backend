@@ -4,7 +4,7 @@ from accounts.models import Profile
 
 class Category(models.Model):
     title = models.CharField(max_length=30, blank=False, unique=True,)
-    # image = models.ImageField()
+    image = models.ImageField(upload_to='images/categories', blank=True,)
 
     def __str__(self) :
         return self.title
@@ -21,11 +21,11 @@ class Recipe(models.Model):
         related_name='category',
     )
     title = models.CharField(max_length=30,)
-    prepTime = models.IntegerField(blank=True,)
-    cookTime = models.IntegerField(blank=True,)
-    servings = models.IntegerField(blank=True,)
-    method = models.TextField()
-    # image = models.ImageField()
+    prepTime = models.IntegerField(blank=True, null= True,)
+    cookTime = models.IntegerField(blank=True, null= True,)
+    servings = models.IntegerField(blank=True, null= True,)
+    method = models.TextField(blank=True, null= True,)
+    image = models.ImageField(upload_to='images/recipes', blank=True,)
     # ingredients = models.TextField()
 
     def __str__(self) :
