@@ -14,8 +14,17 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
+from recipes.views import CategoriesView, RecipeListView, CategoryListView
+from django.conf import settings
+from django.conf.urls.static import static
+
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register('category', CategoriesView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,11 +32,11 @@ urlpatterns = [
 
     # ----- Authentications URLs -----
     path('auth/signup/', UserCreateAPIView.as_view() , name="signup"),
-    path('auth/login/', UserLoginAPIView.as_view() , name="login"),
+    path('auth/signin/', UserLoginAPIView.as_view() , name="signin"),
 
 
     # ----- Recipes URLs -----
-    # path('recipes/', users_views.register , name="recipes-list"),
+    path('recipes/', RecipeListView.as_view() , name="recipes-list"),
     # path('recipes/add/', users_views.register , name="recipe-add"),
     # path('recipes/<int:recipe_id>/', users_views.register , name="recipe-details"),
     # path('recipes/<int:recipe_id>/edit/', users_views.register , name="recipe-edit"),
@@ -35,7 +44,8 @@ urlpatterns = [
     
     
     # ----- Categories URLs -----
-    # path('categories/', users_views.register , name="categories-list"),
+    path('', include(router.urls)),
+    path('categories', CategoryListView.as_view() , name="categories-list"),
     # path('categories/add/', users_views.register , name="category-add"),
     # path('categories/<int:category_id>/', users_views.register , name="category-details"),
     # path('categories/<int:category_id>/edit/', users_views.register , name="category-edit"),
@@ -43,9 +53,15 @@ urlpatterns = [
     
     
     # ----- Ingredients URLs -----
-    # path('ingredients/', users_views.register , name="ingredients-list"),
+    # path('ingredients/', users_views.register , name="ingredients-list"),``
     # path('ingredients/add/', users_views.register , name="ingredient-add"),
     # path('ingredients/<int:ingredient_id>/', users_views.register , name="ingredient-details"),
     # path('ingredients/<int:ingredient_id>/edit/', users_views.register , name="ingredient-edit"),
     # path('ingredients/<int:ingredient_id>/delete/', users_views.register , name="ingredient-delete"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
