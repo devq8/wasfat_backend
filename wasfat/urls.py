@@ -45,7 +45,7 @@ urlpatterns = [
     
     # ----- Categories URLs -----
     path('', include(router.urls)),
-    path('categories', CategoryListView.as_view() , name="categories-list"),
+    path('categories/', CategoryListView.as_view() , name="categories-list"),
     # path('categories/add/', users_views.register , name="category-add"),
     # path('categories/<int:category_id>/', users_views.register , name="category-details"),
     # path('categories/<int:category_id>/edit/', users_views.register , name="category-edit"),

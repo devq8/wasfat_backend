@@ -36,6 +36,20 @@ class RecipeListView(ListAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeListSerializer
 
+
+    def list(self, req):
+
+        category_filter = self.request.query_params.get('category', None)
+        print(category_filter)
+        
+        if category_filter != None:
+            self.queryset = self.queryset.filter(category=category_filter)
+
+        
+
+        return super().list(req)
+
 class CategoryListView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializer
+
