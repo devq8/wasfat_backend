@@ -9,6 +9,17 @@ class Category(models.Model):
     def __str__(self) :
         return self.title
 
+
+class Ingredient(models.Model):
+    # recipes = models.ManyToManyField(
+    #     Recipe,
+    #     related_name='recipes'
+    # )
+    title = models.CharField(max_length=30, blank=False, unique=True,)
+
+    def __str__(self) :
+        return self.title
+
 class Recipe(models.Model):
     profile = models.ForeignKey(
         Profile,
@@ -26,22 +37,13 @@ class Recipe(models.Model):
     servings = models.IntegerField(blank=True, null= True,)
     method = models.TextField(blank=True, null= True,)
     image = models.ImageField(upload_to='images/recipes', blank=True,)
-    # ingredients = models.TextField()
-
-    def __str__(self) :
-        return self.title
-
-class Ingredient(models.Model):
-    recipes = models.ManyToManyField(
-        Recipe,
-        related_name='recipes'
+    ingredient = models.ManyToManyField(
+        Ingredient,
+        related_name='ingredients',
     )
-    title = models.CharField(max_length=30, blank=False, unique=True,)
 
     def __str__(self) :
         return self.title
-
-
 class Quantity(models.Model):
     ingredient = models.ManyToManyField(
         Ingredient,
