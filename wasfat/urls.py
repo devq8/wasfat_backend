@@ -16,15 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
-from recipes.views import CategoriesView, RecipeListView, CategoryListView
+from recipes.views import RecipeListView, CategoryListView, CategoryCreateView, CategoryUpdateView
 from django.conf import settings
 from django.conf.urls.static import static
 
 from rest_framework import routers
 
 
-router = routers.DefaultRouter()
-router.register('category', CategoriesView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -44,11 +42,10 @@ urlpatterns = [
     
     
     # ----- Categories URLs -----
-    path('', include(router.urls)),
     path('categories/', CategoryListView.as_view() , name="categories-list"),
-    # path('categories/add/', users_views.register , name="category-add"),
+    path('categories/add/', CategoryCreateView.as_view() , name="category-add"),
+    path('categories/<int:category_id>/edit/', CategoryUpdateView.as_view() , name="category-edit"),
     # path('categories/<int:category_id>/', users_views.register , name="category-details"),
-    # path('categories/<int:category_id>/edit/', users_views.register , name="category-edit"),
     # path('categories/<int:category_id>/delete/', users_views.register , name="category-delete"),
     
     
