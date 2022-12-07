@@ -16,7 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
-from recipes.views import RecipeListView, CategoryListView, CategoryCreateView, CategoryUpdateView, DeleteView
+from recipes.views import RecipeListView, RecipeUpdateView, RecipeDeleteView
+from recipes.views import CategoryListView, CategoryCreateView, CategoryUpdateView , DeleteView
+from recipes.views import IngredientListView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -36,9 +38,8 @@ urlpatterns = [
     # ----- Recipes URLs -----
     path('recipes/', RecipeListView.as_view() , name="recipes-list"),
     # path('recipes/add/', users_views.register , name="recipe-add"),
-    # path('recipes/<int:recipe_id>/', users_views.register , name="recipe-details"),
-    # path('recipes/<int:recipe_id>/edit/', users_views.register , name="recipe-edit"),
-    # path('recipes/<int:recipe_id>/delete/', users_views.register , name="recipe-delete"),
+    path('recipes/<int:recipe_id>/edit/', RecipeUpdateView.as_view() , name="recipe-edit"),
+    path('recipes/<int:recipe_id>/delete/', RecipeDeleteView.as_view() , name="recipe-delete"),
     
     
     # ----- Categories URLs -----
@@ -50,11 +51,11 @@ urlpatterns = [
     
     
     # ----- Ingredients URLs -----
-    # path('ingredients/', users_views.register , name="ingredients-list"),``
+    path('ingredients/', IngredientListView.as_view() , name="ingredients-list"),
     # path('ingredients/add/', users_views.register , name="ingredient-add"),
-    # path('ingredients/<int:ingredient_id>/', users_views.register , name="ingredient-details"),
     # path('ingredients/<int:ingredient_id>/edit/', users_views.register , name="ingredient-edit"),
     # path('ingredients/<int:ingredient_id>/delete/', users_views.register , name="ingredient-delete"),
+    
 ]
 
 if settings.DEBUG:

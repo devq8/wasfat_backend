@@ -6,12 +6,28 @@ class CategoryListSerializer(serializers.ModelSerializer):
         model = Category
         fields = ['id', 'title', 'image',]
 
+class IngredientListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ['id', 'title',]
+
 
 class RecipeListSerializer(serializers.ModelSerializer):
 
-    category = CategoryListSerializer(); 
+    category = CategoryListSerializer()
 
     class Meta:
         model = Recipe
-        fields = ['id', 'category', 'title', 'prepTime', 'cookTime', 'servings', 'method', 'image',]
+        fields = ['id', 'profile', 'category', 'title', 'prepTime', 'cookTime', 'servings', 'method', 'image',]
 
+class QuantityListSerializer(serializers.ModelSerializer):
+    
+    
+    class Meta:
+        model = Quantity
+        fields = ['ingredient', 'recipe', 'qty', 'unit', ]
+
+# class RecipeUpdateSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = Recipe
+#         fields = ['id', 'title', 'category', ]
