@@ -1,12 +1,9 @@
-from django.shortcuts import render
+
 from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, DestroyAPIView
-from rest_framework import serializers
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
+
+
 from recipes.serializer import RecipeListSerializer, CategoryListSerializer, IngredientListSerializer
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+
 
 from recipes.models import Category, Recipe, Ingredient
 
@@ -84,6 +81,12 @@ class CategoryCreateView(CreateAPIView):
         serializer.save()
 
 class CategoryUpdateView(UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'category_id'
+
+class DeleteView(DestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializer
     lookup_field = 'id'
