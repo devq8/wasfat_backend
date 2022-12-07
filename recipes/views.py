@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, CreateAPIView ,UpdateAPIView
+from rest_framework.generics import ListAPIView, CreateAPIView ,UpdateAPIView ,DestroyAPIView
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -30,6 +30,12 @@ class CategoryCreateView(CreateAPIView):
         serializer.save()
 
 class CategoryUpdateView(UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'category_id'
+
+class DeleteView(DestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializer
     lookup_field = 'id'

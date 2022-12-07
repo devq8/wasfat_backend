@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
-from recipes.views import RecipeListView, CategoryListView, CategoryCreateView, CategoryUpdateView
+from recipes.views import RecipeListView, CategoryListView, CategoryCreateView, CategoryUpdateView, DeleteView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -45,8 +45,8 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view() , name="categories-list"),
     path('categories/add/', CategoryCreateView.as_view() , name="category-add"),
     path('categories/<int:category_id>/edit/', CategoryUpdateView.as_view() , name="category-edit"),
+    path('categories/<int:category_id>/delete/', DeleteView.as_view() , name="category-delete"),
     # path('categories/<int:category_id>/', users_views.register , name="category-details"),
-    # path('categories/<int:category_id>/delete/', users_views.register , name="category-delete"),
     
     
     # ----- Ingredients URLs -----
