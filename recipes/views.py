@@ -54,6 +54,7 @@ class CategoryUpdateView(UpdateAPIView):
     lookup_url_kwarg = 'category_id'
 
 
+
 # ------------- INGREDIENT VIEWS -------------
 
 class IngredientListView(ListAPIView):
@@ -71,4 +72,20 @@ class IngredientListView(ListAPIView):
         
         return queryset
 
+
+class CategoryListView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+
+class CategoryCreateView(CreateAPIView):
+    serializer_class = CategoryListSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class CategoryUpdateView(UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'category_id'
 
