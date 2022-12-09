@@ -26,8 +26,8 @@ class RecipeCreateView(CreateAPIView):
     serializer_class = CreateRecipeSerializer
     # permission_classes=[IsAdminUser]
 
-    # def perform_create(self, serializer):
-    #     serializer.save(profile = self.request.user)
+    def perform_create(self, serializer):
+        serializer.save()
 
 class RecipeUpdateView(UpdateAPIView):
     queryset = Recipe.objects.all()
