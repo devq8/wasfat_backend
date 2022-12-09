@@ -16,39 +16,13 @@ class Category(models.Model):
     def __str__(self) :
         return self.title
 
-class Quantity(models.Model):
-    
-    # recipe = models.ForeignKey(
-    #     Recipe,
-    #     on_delete=models.CASCADE,
-    #     related_name='recipe'
-    # )
-    qty = models.CharField(max_length=30, )
-    unit = models.CharField(max_length=30, )
-
-    # class Meta:
-    #     verbose_name = 'Quantity'
-    #     verbose_name_plural = 'Quantities'
-
-    def __str__(self) :
-        return f'{self.qty} {self.unit}'
-
-
 
 class Ingredient(models.Model):
-    # recipe = models.ManyToManyField(
-    #     Recipe,
-    #     related_name='ingredient'
-    # )
-    qty = models.ForeignKey(
-        Quantity,
-        on_delete=models.CASCADE,
-        related_name='ingredient',
-    )
+    
     title = models.CharField(max_length=30, blank=False, unique=True,)
 
     def __str__(self) :
-        return f'{self.qty} of {self.title}'
+        return f'ID: {self.id} - {self.title}'
  
 
 class Recipe(models.Model):
@@ -65,13 +39,10 @@ class Recipe(models.Model):
 
     ingredients = models.ManyToManyField(
         Ingredient,
-        related_name='recipes'
+        related_name='recipes',
+        blank=True,
     )
-
-    # ingredients = models.ManyToManyField(
-    #     Ingredient, 
-    #     related_name='ingredients',
-    # )
+    
     title = models.CharField(max_length=30,)
     prepTime = models.IntegerField(blank=True, null= True,)
     cookTime = models.IntegerField(blank=True, null= True,)
@@ -83,6 +54,26 @@ class Recipe(models.Model):
         return self.title
 
 
+
+
+# class Likes(models.Model):
+#     profile = models.ForeignKey(
+#         Profile,
+#         on_delete=models.CASCADE,
+#         related_name='likes',
+#     )
+#     recipe = models.ForeignKey(
+#         Recipe,
+#         on_delete=models.CASCADE,
+#         related_name='likes'
+#     )
+#     liked_at = models.DateTimeField(auto_now_add=True)
+
+#     def __str__(self):
+#         return f'{self.profile} liked {self.recipe} on {self.liked_at}'
+
+#     class Meta:
+#             verbose_name_plural = 'Likes'
 
 # class Rate(models.Model):
 #     profile = models.ForeignKey(

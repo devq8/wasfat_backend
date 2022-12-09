@@ -7,6 +7,10 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 class UserCreateAPIView(CreateAPIView):
     serializer_class = UserCreateSerializer
 
+    # def perform_create(self, serializer):
+    #     print("I'm in perform_create of UserCreateAPIView")
+    #     serializer.save()
+
 class UserLoginAPIView(APIView):
     serializer_class = UserLoginSerializer
 
