@@ -5,7 +5,8 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
-from recipes.serializer import RecipeListSerializer, CategoryListSerializer, IngredientListSerializer
+from recipes.serializer import RecipeListSerializer, CreateRecipeSerializer
+from recipes.serializer import CategoryListSerializer, IngredientListSerializer
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 
 from recipes.models import Category, Recipe, Ingredient
@@ -19,6 +20,14 @@ class RecipeListView(ListAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeListSerializer
     # permission_classes=[IsAdminUser]
+
+class RecipeCreateView(CreateAPIView):
+    
+    serializer_class = CreateRecipeSerializer
+    # permission_classes=[IsAdminUser]
+
+    # def perform_create(self, serializer):
+    #     serializer.save(profile = self.request.user)
 
 class RecipeUpdateView(UpdateAPIView):
     queryset = Recipe.objects.all()

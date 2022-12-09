@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
-from recipes.views import RecipeListView, RecipeUpdateView, RecipeDeleteView
+from recipes.views import RecipeListView, RecipeCreateView, RecipeUpdateView, RecipeDeleteView
 from recipes.views import CategoryListView, CategoryCreateView, CategoryUpdateView
 from recipes.views import IngredientListView
 from django.conf import settings
@@ -34,7 +34,7 @@ urlpatterns = [
 
     # ----- Recipes URLs -----
     path('recipes/', RecipeListView.as_view() , name="recipes-list"),
-    # path('recipes/add/', users_views.register , name="recipe-add"),
+    path('recipes/add/', RecipeCreateView.as_view() , name="recipe-add"),
     path('recipes/<int:recipe_id>/edit/', RecipeUpdateView.as_view() , name="recipe-edit"),
     path('recipes/<int:recipe_id>/delete/', RecipeDeleteView.as_view() , name="recipe-delete"),
     

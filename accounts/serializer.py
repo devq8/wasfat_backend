@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+from accounts.models import Profile
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -10,13 +11,20 @@ class UserCreateSerializer(serializers.ModelSerializer):
         model = User
         fields = ['id', 'username', 'password', 'token']
 
+    
     def create(self, validated_data):
         print('Start creating new account process ...')
+        print(validated_data)
         username = validated_data['username']
         password = validated_data['password']
         new_user = User(username = username)
         new_user.set_password(password)
         new_user.save()
+
+        #Create profile after creating user account
+        Profile.objects.create(user=new_user, image='')
+
+
         print('User account created successfully')
         payload = RefreshToken.for_user(new_user)
         payload['username'] = str(username)
@@ -39,6 +47,7 @@ class UserLoginSerializer(serializers.Serializer):
 
         try:
             user_obj = User.objects.get(username = my_username)
+            profile = Profile.objects.get(user=user_obj)
         except User.DoesNotExist:
             raise serializers.ValidationError('Username does not exist!!')
         if not user_obj.check_password(my_password):
