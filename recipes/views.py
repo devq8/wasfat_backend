@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, DestroyAPIView
 from rest_framework import serializers
 from rest_framework import viewsets
@@ -63,6 +63,7 @@ class CategoryUpdateView(UpdateAPIView):
     lookup_url_kwarg = 'category_id'
 
 
+
 # ------------- INGREDIENT VIEWS -------------
 
 class IngredientListView(ListAPIView):
@@ -80,4 +81,26 @@ class IngredientListView(ListAPIView):
         
         return queryset
 
+
+class CategoryListView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+
+class CategoryCreateView(CreateAPIView):
+    serializer_class = CategoryListSerializer
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+class CategoryUpdateView(UpdateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'category_id'
+
+class DeleteView(DestroyAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategoryListSerializer
+    lookup_field = 'id'
+    lookup_url_kwarg = 'category_id'
 
