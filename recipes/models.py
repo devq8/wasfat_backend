@@ -51,52 +51,7 @@ class Recipe(models.Model):
     image = models.ImageField(upload_to='images/recipes', blank=True,)
 
     def __str__(self) :
-        return self.title
+        return f'{self.id} - {self.title}'
 
 
 
-
-# class Likes(models.Model):
-#     profile = models.ForeignKey(
-#         Profile,
-#         on_delete=models.CASCADE,
-#         related_name='likes',
-#     )
-#     recipe = models.ForeignKey(
-#         Recipe,
-#         on_delete=models.CASCADE,
-#         related_name='likes'
-#     )
-#     liked_at = models.DateTimeField(auto_now_add=True)
-
-#     def __str__(self):
-#         return f'{self.profile} liked {self.recipe} on {self.liked_at}'
-
-#     class Meta:
-#             verbose_name_plural = 'Likes'
-
-# class Rate(models.Model):
-#     profile = models.ForeignKey(
-#         Profile,
-#         on_delete=models.CASCADE,
-#         related_name='profile',
-#     )
-#     recipe = models.ForeignKey(
-#         Recipe,
-#         on_delete=models.CASCADE,
-#         related_name='recipe',
-#     )
-#     rate = models.IntegerField(blank=False,)
-
-# class Report(models.Model):
-#     profile = models.ForeignKey(
-#         Profile,
-#         on_delete=models.CASCADE,
-#         related_name='profile',
-#     )
-#     category = models.ForeignKey(
-#         Category,
-#         on_delete=models.CASCADE,
-#         related_name='category',
-#     )
-#     details = models.CharField(max_length=30, blank=False,)

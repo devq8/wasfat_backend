@@ -17,11 +17,11 @@ class RecipeListSerializer(serializers.ModelSerializer):
 
     category = CategoryListSerializer()
 
-    # ingredients = IngredientListSerializer(many=True)
+    ingredients = IngredientListSerializer(many=True,)
 
     class Meta:
         model = Recipe
-        fields = ['id', 'profile', 'category', 'title', 'prepTime', 'cookTime', 'servings', 'method', 'image', ]
+        fields = ['id', 'profile', 'category', 'title', 'prepTime', 'cookTime', 'servings', 'method', 'image', 'ingredients']
 
 class CreateRecipeSerializer(serializers.ModelSerializer):
     
@@ -30,9 +30,3 @@ class CreateRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Recipe
         fields = ['profile', 'category', 'title', 'prepTime', 'cookTime', 'servings', 'method', 'image', 'ingredients']
-
-
-# class RecipeUpdateSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Recipe
-#         fields = ['id', 'title', 'category', ]

@@ -55,9 +55,13 @@ class UserLoginSerializer(serializers.Serializer):
 
         payload = RefreshToken.for_user(user_obj)
         payload['username'] = user_obj.username
+        try:
+            payload['image'] = profile.image.url
+        except:
+            pass
         token = str(payload.access_token)
 
         data['username'] = str(user_obj.username)
         data['token'] = token
-
+        print(data)
         return data

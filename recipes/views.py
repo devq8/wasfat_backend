@@ -1,46 +1,46 @@
 
 from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, DestroyAPIView
-from rest_framework import serializers
-from rest_framework import viewsets
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from recipes.serializer import RecipeListSerializer, CreateRecipeSerializer
 from recipes.serializer import CategoryListSerializer, IngredientListSerializer
-from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny
 
 from recipes.models import Category, Recipe, Ingredient
 
-from recipes.permissions import IsUploader
+from recipes.permissions import IsCreator
 
 
 # ------------- RECIPE VIEWS -------------
 
 class RecipeListView(ListAPIView):
-    queryset = Recipe.objects.all()
     serializer_class = RecipeListSerializer
-    # permission_classes=[IsAdminUser]
+    def get_queryset(self):
+        queryset = Recipe.objects.all()
+        
+        return queryset
+    permission_classes=[AllowAny]
 
 class RecipeCreateView(CreateAPIView):
     
     serializer_class = CreateRecipeSerializer
     # permission_classes=[IsAdminUser]
 
-    # def perform_create(self, serializer):
-    #     serializer.save(profile = self.request.user)
+    def perform_create(self, serializer):
+        serializer.save()
+    permission_classes=[IsAuthenticated]
 
 class RecipeUpdateView(UpdateAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeListSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'recipe_id'
-    permission_classes = [IsUploader]
+    permission_classes = [IsCreator]
 
 class RecipeDeleteView(DestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeListSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'recipe_id'
+    permission_classes = [IsCreator]
 
 
 # ------------- CATEGORY VIEWS -------------
@@ -48,12 +48,14 @@ class RecipeDeleteView(DestroyAPIView):
 class CategoryListView(ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializer
+    permission_classes=[AllowAny]
 
 class CategoryCreateView(CreateAPIView):
     serializer_class = CategoryListSerializer
 
     def perform_create(self, serializer):
         serializer.save()
+    permission_classes=[IsAuthenticated]
 
 
 class CategoryUpdateView(UpdateAPIView):
@@ -61,6 +63,7 @@ class CategoryUpdateView(UpdateAPIView):
     serializer_class = CategoryListSerializer
     lookup_field = 'id'
     lookup_url_kwarg = 'category_id'
+    permission_classes=[IsAuthenticated]
 
 
 
@@ -80,6 +83,7 @@ class IngredientListView(ListAPIView):
         queryset = Ingredient.objects.filter(recipes__in=list(recipes)).distinct()
         
         return queryset
+    permission_classes=[AllowAny]
 
 
 class CategoryListView(ListAPIView):
