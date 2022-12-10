@@ -1,4 +1,4 @@
-from django.shortcuts import render
+
 from rest_framework.generics import ListAPIView, UpdateAPIView, CreateAPIView, DestroyAPIView
 from recipes.serializer import RecipeListSerializer, CreateRecipeSerializer
 from recipes.serializer import CategoryListSerializer, IngredientListSerializer
@@ -66,6 +66,7 @@ class CategoryDeleteView(DestroyAPIView):
     lookup_field = 'id'
     lookup_url_kwarg = 'category_id'
     permission_classes=[IsAuthenticated,IsAdminUser]
+
 
 
 # ------------- INGREDIENT VIEWS -------------
