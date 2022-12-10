@@ -17,8 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from accounts.views import UserLoginAPIView, UserCreateAPIView
 from recipes.views import RecipeListView, RecipeCreateView, RecipeUpdateView, RecipeDeleteView
-from recipes.views import CategoryListView, CategoryCreateView, CategoryUpdateView
-from recipes.views import IngredientListView
+from recipes.views import CategoryListView, CategoryCreateView, CategoryUpdateView, CategoryDeleteView
+from recipes.views import IngredientListView, IngredientCreateView, IngredientUpdateView, IngredientDeleteView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -46,20 +46,17 @@ urlpatterns = [
     path('categories/', CategoryListView.as_view() , name="categories-list"),
     path('categories/add/', CategoryCreateView.as_view() , name="category-add"),
     path('categories/<int:category_id>/edit/', CategoryUpdateView.as_view() , name="category-edit"),
-    path('categories/<int:category_id>/delete/', DeleteView.as_view() , name="category-delete"),
-    # path('categories/<int:category_id>/', users_views.register , name="category-details"),
+    path('categories/<int:category_id>/delete/', CategoryDeleteView.as_view() , name="category-delete"),
     
     
     # ----- Ingredients URLs -----
     path('ingredients/', IngredientListView.as_view() , name="ingredients-list"),
-    # path('ingredients/add/', users_views.register , name="ingredient-add"),
-    # path('ingredients/<int:ingredient_id>/edit/', users_views.register , name="ingredient-edit"),
-    # path('ingredients/<int:ingredient_id>/delete/', users_views.register , name="ingredient-delete"),
+    path('ingredients/add/', IngredientCreateView.as_view() , name="ingredient-add"),
+    path('ingredients/<int:ingredient_id>/edit/', IngredientUpdateView.as_view() , name="ingredient-edit"),
+    path('ingredients/<int:ingredient_id>/delete/', IngredientDeleteView.as_view() , name="ingredient-delete"),
     
 ]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

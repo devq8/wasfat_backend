@@ -25,8 +25,6 @@ class RecipeListSerializer(serializers.ModelSerializer):
 
 class CreateRecipeSerializer(serializers.ModelSerializer):
     
-    # ingredients = IngredientListSerializer(many=True)
-
     class Meta:
         model = Recipe
         fields = ['profile', 'category', 'title', 'prepTime', 'cookTime', 'servings', 'method', 'image', 'ingredients']

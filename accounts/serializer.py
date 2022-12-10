@@ -36,7 +36,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
         
 
 class UserLoginSerializer(serializers.Serializer):
-    username = serializers.CharField()
+    username = serializers.CharField(write_only = True)
     password = serializers.CharField(write_only = True)
     token = serializers.CharField(allow_blank = True, read_only = True)
 
@@ -61,7 +61,7 @@ class UserLoginSerializer(serializers.Serializer):
             pass
         token = str(payload.access_token)
 
-        data['username'] = str(user_obj.username)
+        # data['username'] = str(user_obj.username)
         data['token'] = token
         print(data)
         return data
